@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <center>
+        <h1>登入</h1>
+        {% if messages %}
+            <div class="alert">
+                {% for msg in messages %}{{ msg.message }}{% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="" method="POST">
+        {% csrf_token %}
+            {{ form.as_p }}
+        <button type="submit"> <a href='../index/'>取消</a></button>
+        <input type="submit" class="input_button" value="登入" /> <!-- input原本有 class="btn btn-primary" -->
+        <p>還沒有帳號嗎? <a href="../signup">註冊</a></p>
+    </form>
+    </center>
+{% endblock %}

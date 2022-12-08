@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>我的收藏</h1>
+    {% for instance in cart %}
+        {% if instance.account_id == request.user.id %}
+            <div style="margin: 10px;"> <!-- 每筆收藏 -->
+                <div style="display: flex; position: relative;">
+
+                    <div style="display: flex;"> <!-- 圖片部份 -->
+                        <a style="display: flex;" href='{{ instance.product.get_absolute_url }}'>
+                            <img style="margin: auto; display: block;  width: 250px;" src="{{ instance.product.picture.url }}">
+                        </a>
+                    </div>
+
+                    <hr class="cline"> <!-- 垂直分隔線 -->
+
+                    <div> <!-- 商品簡述 -->
+                        <h2>{{ instance.product.product_name }}</h2>
+                        <p>材質 ： {{ instance.product.material }}</p>
+                        <p>顏色 ： {{ instance.product.color }}</p>
+                        <p>價格 ： NT$. {{ instance.product.price }}</p>
+                    </div>
+
+                    <div style="position:absolute; right: 5%; top: 35%;">
+                        <form action='.' method='POST'>{% csrf_token %}
+                            <button type="submit"><a href="../{{ instance.id }}/cart_delete">移除收藏</a></button>
+                        </form>
+                    </div>
+                </div>
+                <hr class="rline"> <!-- 水平分隔線 position: relative;50px 30px 50px 520px-->
+
+            </div>
+
+        {% endif %}
+    {% endfor %}
+{% endblock %}

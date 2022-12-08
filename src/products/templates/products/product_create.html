@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <center>
+        <h1>{{ state }}</h1>
+        <form action="" method='POST' enctype="multipart/form-data"> <!--「輸入」的型態為 'submit'-->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" onclick="history.go(-1)"> 取消 </button>
+            <a onclick="history.go(-1)"><input type='submit' class="input_button" value='確定'/></a><!--「輸入」的型態為'submit'-->
+        </form>
+    </center>
+{% endblock %}
+
+<!--
+
+action='.'引號中為想執行的網址
+method='POST'為將資料存入資料庫中，method='GET'為取得資料
+csrf_token為確認網路安全的東西(security feature)
+<input type ='text' name='title' placeholder='your_title'/> 「輸入」的型態為'text'，名字為'title'
+上傳.obj或.gltf檔：<input type='file' placeholder='your_title' accept='.obj,.gltf'><br/>
+
+-->

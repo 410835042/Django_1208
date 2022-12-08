@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <button onclick="call_counter('../GetHand/getting');">偵測手部比例</button>
+{#    <button onclick="video()" id="knocker">Knock</button>#}
+{#    <form action='.' method='POST'>{% csrf_token %}#}
+{#        <button type="submit"> test </button>#}
+{#    </form>#}
+
+    <hr class="rline"> <!-- 水平分隔線 position: relative;50px 30px 50px 520px-->
+    <div style="display: flex; position: relative;"> <!--下半部 -->
+        <div style="width: 50%;"> <!--下左半部-->
+            <div>
+                <h1>操作步驟</h1>
+                <h3>偵測手部比例</h3>
+                <p>1. 將欲偵測的手手心面對境頭且保持30約公分的距離</p>
+                <p>2. 保持手部穩定後，點選「偵測手部比例」進入新頁面</p>
+                <p>3. 新頁面中出現鏡頭畫面後即可關閉新頁面</p>
+                <p>4. 關閉新頁面後即完成手部比例的偵測</p>
+                <p>(注意事項：本系統目前一次只能偵測一隻手，若鏡頭抓取到的畫面中出現一隻以上的手，可能出現錯誤。)</p><br/>
+            </div>
+        </div>
+
+        <hr class="cline"> <!-- 垂直分隔線 -->
+
+{#        <div style="display: flex; align-items: center; flex-wrap: wrap; width: 50%; background-color: black;"> <!--下右半部： 影像-->#}
+{#            <div style="position: relative; margin: auto; justify-content: center;">#}
+{#                <canvas style="background-color: #81d4fa;" >#}
+{#                </canvas>#}
+{#            </div>#}
+{#            <div style="position: relative; margin: auto; justify-content: center;">#}
+{#                <video style="background-color: #ffce8b; " autoplay data-uid="67" id="vid_output">#}
+{#                </video>#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+
+    <script>
+        function call_counter(url) { window.open(url); }
+    </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" href="{% static 'Texture/logo.png' %}" type="image/x-icon"> <!--網站的小圖-->
+    <title>Holographic Display</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+<py-env>
+- cv2
+- numpy
+- math
+- time
+</py-env>
+</head>
+<body>
+
+    <div style="margin: 0; padding: 0;">
+        <div>
+            <marquee><p>本系統是由國立東華大學 資訊管理學系 第23屆 畢業專題第三組開發</p></marquee>
+            {% include 'navbar.html' %}
+        </div>
+
+    </div>
+{#    src="/static/GetHand.py"#}
+<py-script src="/pages/script/GetHand.py">
+vid = StreamingHttpResponse(V_Camera2(), content_type='multipart/x-mixed-replace; boundary=frame')
+</py-script>
+</body>
+</html>

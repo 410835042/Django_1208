@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<center>
+    <h1>更新手部尺寸</h1>
+
+    <form action='.' method='POST'>{% csrf_token %}
+        <div style="display: flex; position: relative;justify-content: center;">
+            <div style="text-align: right;"><p>手掌長：{{ form.palm_length}}</p></div>
+            <hr class="cline">
+            <div style="text-align: right;"><p>手掌寬：{{ form.palm_width}}</p></div>
+        </div>
+
+        <hr class="line">
+
+        <div style="display: flex; position: relative;justify-content: center;">
+            <div style="text-align: right;">
+                <p>拇指長：{{ form.thumb_length }}</p>
+                <p>食指長：{{ form.index_length }}</p>
+                <p>中指長：{{ form.middle_length }}</p>
+                <p>無名指長：{{ form.ring_length }}</p>
+                <p>小指長：{{ form.little_length }}</p>
+            </div>
+
+            <hr class="cline">
+
+            <div style="text-align: right;">
+                <p>拇指寬：{{ form.thumb_width}}</p>
+                <p>食指寬：{{ form.index_width }}</p>
+                <p>中指寬：{{ form.middle_width }}</p>
+                <p>無名指寬：{{ form.ring_width }}</p>
+                <p>小指寬：{{ form.little_width }}</p>
+            </div>
+        </div>
+
+        <button type="submit"><a href='../../partners/'> 取消 </a></button>
+        <input type='submit' class="input_button" value='更新'/><!--「輸入」型態為submit-->
+    </form>
+</center>
+{% endblock %}

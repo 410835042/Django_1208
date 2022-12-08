@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="display: flex;">
+        <div style="justify-content: space-between; display: flex;"> <!-- 圖片 -->
+            {% if object.picture %}
+                <img style="margin:auto; display:block; width:500px;" src="{{ object.picture.url }}"><br/>
+            {% else %}
+                <p>圖片 | 尚無圖片</p><br/>
+            {% endif %}
+        </div>
+
+        <hr class="line">
+
+        <div style="justify-content: space-between; align-items: center;">
+            <div> <!-- 商品資訊 -->
+                <div style="display: flex; position: relative; align-items: center;"> <!-- 品名和愛心 -->
+                    <div> <!-- 品名 -->
+                        <h1>{{ object.product_name }}</h1>
+                    </div>
+
+                    <div> <!-- 愛心 -->
+                        {% if request.user.identity == 0 %}
+                            <form style="display: flex; align-items: center;"action='.' method='POST'>{% csrf_token %}
+                                {{ form.as_p }}
+                                <input type='submit' class="heart2" value='&#10084'/>
+                                {% for instance in cart %}
+                                    {% if object.id == instance.product.id %}
+                                        <button type="submit"class="chosen_heart2"><a href="cart_delete">&#10084</a></button>
+                                    {%endif%}
+                                {%endfor%}
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <p>品牌 | {{ object.brand.brand_name }}</p>
+                <p>商品編號 | {{ object.brand.id }}.{{ object.id }}</p>
+                <div class="link-middle"></div>
+                <p>材質 | {{ object.material }}</p>
+                <p>顏色 | {{ object.color }}</p>
+                <p>敘述 | {{ object.description }}</p>
+                <p>價格 | NT$. {{ object.price }}</p>
+                <p>現有尺寸 |
+                    {% if  object.size.filter  %}
+                        {% for instance in object.size.filter %}
+                            {{ instance.ring_size}},
+                        {% endfor %}
+                    {% else %}
+                        （缺貨中）
+                    {% endif %}
+                </p>
+
+                {% if object.threeD_model %}
+                    <div>3D模型 | 已有3D模型<br/></div>
+                {% else %}
+                    <p>3D模型 | 尚無3D模型（無法進行模擬配戴）</p><br/>
+                {% endif %}
+            </diV>
+
+            <diV> <!-- 下方按鈕 -->
+                {% if request.user.identity == 1 %}  <!-- 廠商 -->
+                    <button type="submit"><a href="../brand/{{ object.brand.id }}"> 回到清單 </a></button>
+                    {% if object.threeD_model %}
+                        <button type="submit"> <a href='Simulate/'> 模擬配戴 </a></button>
+                    {% endif %}
+                    <button type="submit"> <a href='update/'> 更新 </a></button>
+                    <button type="submit"> <a href='delete/'> 刪除 </a></button>
+
+                {% elif request.user.identity == 0 %}  <!-- 消費者 -->
+                    <div style="display: flex; position: relative;">
+
+                        <div>
+                            {% if object.threeD_model %}
+                                <button type="submit"> <a href='Simulate/'> 模擬配戴 </a></button>
+                            {% endif %}
+                            <button type="submit"> <a href='../../partners/{{ object.brand.id }}/'> 品牌資訊 </a></button>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

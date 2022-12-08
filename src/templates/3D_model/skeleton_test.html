@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Testing</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href='style.css' charset="UTF-8">
+    <style>
+        body {
+            background-color: #eee;
+            color: #444;
+        }
+        a {
+            color: #08f;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://rawcdn.githack.com/mrdoob/three.js/d9f87fb1a2c5db1ea0e2feda9bd42b39b5bedc41/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.85.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.87.1/examples/js/loaders/GLTFLoader.js"></script>
+
+    <script>
+        import * as THREE from 'https://cdn.skypack.dev/three@0.130.0';
+        import { OrbitControls } from 'https://cdn.skypack.dev/three@0.130.0/examples/jsm/controls/OrbitControls.js'; //控制攝影機的模組
+        import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.130.0/examples/jsm/loaders/GLTFLoader.js'; //匯入3D模型的模組
+        import { GUI } from 'https://cdn.skypack.dev/three@0.130.0/examples/jsm/libs/dat.gui.module';
+
+        /* 建立場景 */
+        const scene = new THREE.Scene(); //const 用來宣告常量
+        scene.background = new THREE.Color(0x000000);
+        scene.add(new THREE.AxesHelper(6)); //在場景中增加xyz輔助線 红：X 绿：Y  蓝：Z，數字為線的長度
+
+        const grid = new THREE.GridHelper(10, 10, 0xcccccc, 0xcccccc); // 增加網格(邊長, 邊長格數, 十字線顏色, 網格顏色)
+        scene.add(grid);
+
+        const camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        const rads = new THREE.MathUtils.degToRad(90);
+        camera.rotation.x = -(rads); //弧度，轉九十度為pi/2
+        camera.position.set(15,-8,0);
+        camera.position.z = 5;
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+
+        const controls = new OrbitControls( camera, renderer.domElement);
+        controls.enableDamping = true; // 增加慣性
+
+        //打光 主燈1
+        const light1 = new THREE.PointLight(0xffffff,5); //0xc4c4c4黃燈
+        light1.position.set(30,30,0);
+        light1.castShadow = true;
+        light1.shadow.mapSize.width = 1024;
+        light1.shadow.mapSize.height = 1024;
+        scene.add(light1);
+
+        const walking_bear = new GLTFLoader();
+        walking_bear.load(
+            'Texture/bear_walk/scene.gltf',
+            function ( gltf ) {
+            const bear = gltf.scene.children[0]; //在scene下 新增一個子項目hand
+            bear.position.z = -3;
+            scene.add( gltf.scene );
+            //renderer.render( scene, camera );
+            createPanel();
+            const model = gltf;
+            const skeletion = new THREE.SkeletonHelper(bear);
+            skeletion.visible = true;
+            scene.add(skeletion);
+
+            const mixer = new THREE.AnimationMixer;
+            const clipAction = mixer.clipAction(bear.animations[0]);
+            if (clipAction.isRunning()) { clipAction.stop();}
+            else { clipAction.play(); }
+
+
+            },
+            undefined,
+            function ( error ) {
+              console.error( error );
+            }
+        );
+
+        function createPanel() {
+          const panel = new GUI({ width: 200 });
+          panel.domElement.style.marginTop = "10px";
+
+          const folder1 = panel.addFolder("visibility");
+          const folder2 = panel.addFolder("pause/continue");
+          folder1.open();
+          folder2.open();
+
+          setting = {
+            "show model": true,
+            "show skeleton": false,
+            "pause/continue": pauseContinue,
+          };
+
+          folder1.add(setting, "show model").onChange((visible) => {
+            model.visible = visible;
+          });
+          folder1.add(skeletion, "visible").onChange((visible) => {
+            skeletion.visible = visible;
+          });
+          folder2.add(setting, "pause/continue");
+
+          function pauseContinue() {
+            if (clipAction.isRunning()) {
+              clipAction.stop();
+            } else {
+              clipAction.play();
+            }
+          }
+        }
+
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const delta = clock.getDelta();
+
+            if (mixer) mixer.update(delta);
+
+            controls.update();
+
+            stats.update();
+
+            renderer.render(scene, camera);
+            }
+    </script>
+</body>
+</html>

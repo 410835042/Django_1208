@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+    <button onclick="call_counter('../GetHand/control');" href="">手勢操作</button>
+
+    <hr class="rline"> <!-- 水平分隔線 position: relative;50px 30px 50px 520px-->
+    <div style="display: flex; position: relative;"> <!--下半部 -->
+        <div style="width: 50%;"> <!--下左半部-->
+            <div>
+                <h3>本系統可以使用兩種方式操作介面</h3>
+                <p>一、使用滑鼠直接操作</p>
+                <p>二、在鏡頭前做出指定手勢，代替滑鼠操作</p>
+            </div>
+        </div>
+
+        <hr class="cline"> <!-- 垂直分隔線 -->
+
+        <div style="width: 50%;"> <!--下左半部-->
+            <div>
+                <h3>手勢操作說明</h3>
+                <p>1. 比讚：移動滑鼠</p>
+                <p>2. 比OK：拖曳畫面</p>
+                <p>3. 比一：往前選取</p>
+                <p>4. 比二：往後選許</p>
+                <p>5. 比三：Enter箭</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function call_counter(url) { window.open(url); }
+    </script>
+{% endblock %}

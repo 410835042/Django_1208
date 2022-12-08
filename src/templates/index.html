@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>歡迎蒞臨 愛不飾手</h1>
+    <p>誠摯歡迎您使用本網站 敬祝使用愉快</p><br/>
+
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if forloop.counter <= 4 and instance.picture != Null %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="{{ instance.picture.url}}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+
+                    <div>
+                        {% if request.user.identity == 0 %}  <!-- 消費者 -->
+                            <div style="display: flex;">
+                                <div style="display: flex; position: absolute; left: 20%;">
+                                    <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                                </div>
+
+                                <div style="display: flex; position: absolute; right: 45%;">
+                                    <form action='.' method='POST'>{% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="heart">
+                                            <a href="{{ instance.id }}/cart_add">&#10084</a>
+                                        </button>
+                                        {% for inst in cart %}
+                                            {% if instance.id == inst.product.id %}
+                                                <button type="submit" class="chosen_heart">
+                                                    <a href="{{ instance.id }}/cart_delete">&#10084</a>
+                                                </button>
+                                            {%endif%}
+                                        {%endfor%}
+                                    </form>
+                                </div>
+                            </div>
+
+                        {% elif request.user.identity == 1 %} <!-- 廠商 -->
+                            <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if 5 <= forloop.counter and forloop.counter <= 8 %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="{{ instance.picture.url }}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+                    {% if request.user.identity == 0 %}  <!-- 消費者 -->
+                        <div style="display: flex;">
+                            <div style="display: flex; position: absolute; left: 20%;">
+                                <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                            </div>
+
+                           <div style="display: flex; position: absolute; right: 45%;">
+                               <form action='.' method='POST'>{% csrf_token %}
+                                   {{ form.as_p }}
+                                   <button type="submit" class="heart">
+                                       <a href="{{ instance.id }}/cart_add">&#10084</a>
+                                   </button>
+                                   {% for inst in cart %}
+                                       {% if instance.id == inst.product.id %}
+                                           <button type="submit" class="chosen_heart">
+                                               <a href="{{ instance.id }}/cart_delete">&#10084</a>
+                                           </button>
+                                       {%endif%}
+                                   {%endfor%}
+                                </form>
+                           </div>
+                        </div>
+                    {% elif request.user.identity == 1 %} <!-- 廠商 -->
+                        <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if 9 <= forloop.counter and forloop.counter <= 12 %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="{{ instance.picture.url }}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+                    {% if request.user.identity == 0 %}  <!-- 消費者 -->
+                        <div style="display: flex;">
+                            <div style="display: flex; position: absolute; left: 20%;">
+                                <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                            </div>
+
+                            <div style="display: flex; position: absolute; right: 45%;">
+                                <form action='.' method='POST'>{% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button type="submit" class="heart">
+                                        <a href="{{ instance.id }}/cart_add">&#10084</a>
+                                    </button>
+                                    {% for inst in cart %}
+                                        {% if instance.id == inst.product.id %}
+                                            <button type="submit" class="chosen_heart">
+                                                <a href="{{ instance.id }}/cart_delete">&#10084</a>
+                                            </button>
+                                        {%endif%}
+                                    {%endfor%}
+                                </form>
+                            </div>
+                        </div>
+                    {% elif request.user.identity == 1 %} <!-- 廠商 -->
+                        <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+
+{#        <li><a href='{{ instance.get_absolute_url }}'> {{ instance.product_name }} </a></li>#}
+
+{#    <script type="application/javascript">#}
+{#        let button = document.getElementById('popuptest');#}
+{#        function popup2(e) {#}
+{#            window.confirm('是否使用手勢操作');#}
+{#        }#}
+{#        button.addEventListener('click', popup2);#}
+{#    </script>#}
+
+    {# 暫時先不用   <input id="popuptest" type="button" class="input_button" value="使用手勢操作">#}
+{% endblock %}

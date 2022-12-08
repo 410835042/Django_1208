@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action='.' method='POST'>{% csrf_token %}
+    <h1>您確定要「刪除」品牌 "{{ object.brand_name }}"嗎？</h1>
+    <p>
+        <input type='submit' value='確定'/>
+        <button type="submit"> <a href='../'>取消</a></button>
+    </p>
+    </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>品牌清單</h1>
+        <button type="submit"> <a href='/partners/create/'>新增品牌</a></button>
+        <button type="submit"> <a href='../'>返回夥伴頁面</a></button>
+
+            <ol>
+                <!--列出所有物件-->
+                {% for instance in object_list %}
+                    {% if  instance.account_id == request.user.id %}
+                        <li>品牌編號 No.{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'> {{ instance.brand_name }} </a> </li>
+                    {% endif %}
+                {% endfor %} <!--for loop 結束-->
+            </ol>
+
+    {% else %}
+        <p>您尚未登入-<a href="/partners/login/">登入</a></p>
+    {% endif %}
+{% endblock %}

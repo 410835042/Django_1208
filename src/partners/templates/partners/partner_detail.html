@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <center>
+        <h1>{{ object.brand_name }}</h1>
+        <p>品牌描述： {{ object.description }}</p>
+        <p>連絡信箱： {{ object.email }}</p>
+        <p>聯絡電話： {{ object.phone_number }}</p>
+        <p>統一編號： {{ object.tax_ID_number }}</p>
+        <p>地址： {{ object.address }}</p>
+
+        {% if request.user.identity == 1 %}
+            <button type="submit"> <a href='../list/'> 回到清單 </a></button>
+            <button type="submit"> <a href='../../products/brand/{{ object.id }}/'> 旗下產品 </a></button>
+    {#        <button type="submit"> <a href='products/'> 旗下產品 </a></button>#}
+            <button type="submit"> <a href='update/'> 更新 </a></button>
+            <button type="submit"> <a href='delete/'> 刪除 </a></button>
+        {% endif %}
+    </center>
+{% endblock %}

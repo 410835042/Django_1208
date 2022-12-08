@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" href="{% static 'Texture/logo.png' %}" type="image/x-icon"> <!--網站的小圖-->
+    <title>Holographic Display</title>
+    <script type="module" src="{% static "main.js" %}"></script>
+</head>
+<body>
+    <div class="bg">
+        <img style="opacity: 0.5;" src="{% static 'Texture/marble.jpeg' %}">
+    </div>
+
+    <div style="margin: 0; padding: 0;">
+        <div>
+            <marquee><p>本系統是由國立東華大學 資訊管理學系 第23屆 畢業專題第三組開發</p></marquee>
+            {% include 'navbar.html' %}
+        </div>
+
+        <div style="margin: 0; padding: 0; position: absolute; text-align: left;"> <!-- 左邊div -->
+
+            {% if size %} <!-- 確認是否有手部尺寸 -->
+                <div style="color: transparent; font-size: 0;" id="tl">{{ size.thumb_length }}</div>
+                <div style="color: transparent; font-size: 0;" id="il">{{ size.index_length }}</div>
+                <div style="color: transparent; font-size: 0;" id="ml">{{ size.middle_length }}</div>
+                <div style="color: transparent; font-size: 0;" id="rl">{{ size.ring_length }}</div>
+                <div style="color: transparent; font-size: 0;" id="ll">{{ size.little_length }}</div>
+                <div style="color: transparent; font-size: 0;" id="pl">{{ size.palm_length }}</div>
+
+                <div style="color: transparent; font-size: 0;" id="tw">{{ size.thumb_width }}</div>
+                <div style="color: transparent; font-size: 0;" id="iw">{{ size.index_width }}</div>
+                <div style="color: transparent; font-size: 0;" id="mw">{{ size.middle_width }}</div>
+                <div style="color: transparent; font-size: 0;" id="rw">{{ size.ring_width }}</div>
+                <div style="color: transparent; font-size: 0;" id="lw">{{ size.little_width }}</div>
+                <div style="color: transparent; font-size: 0;" id="pw">{{ size.palm_width }}</div>
+            {% endif %}
+
+            <div style="margin:20px 20px 10px 10px;">
+                <button class="home" ><a href='../../../GetHand/'>前往抓取手部比例</a></button>
+            </div>
+
+            <div style="margin:10px 20px 10px 10px; padding: 10px; border: 2px solid white; background-color: black;"><!-- 左邊方格 -->
+                <center>
+                    <div style="margin: 10px 10px 10px 10px;">
+                        <h3 style="color:white; margin:5px 0 5px 0;">- 背景切換 -</h3>
+                        <div style="margin: 10px 0 10px 0; display: flex;">
+                            <div style="margin: 0 10px 0 15px;">
+                                <p style="margin: 0;color: white;">黑底</p>
+                            </div>
+                            <div style="margin: 0 15px 0 10px;">
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round" id="back"></span>
+                                </label>
+                            </div>
+                            <div style="margin: 0 10px 0 15px;">
+                                <p style="margin: 0;color: white;">透明</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color:white; margin:10px 0px 5px 0px;">- 手部模型 -</h3>
+                        <button id="female_l" class="model_button">纖細左手</button>
+                        <button id="female_r" class="model_button">纖細右手</button><br/>
+                        <button id="man_l" class="model_button">粗獷左手</button>
+                        <button id="man_r" class="model_button">粗獷右手</button>
+                    </div>
+
+                    <div>
+                        <h3 style="color:white; margin:10px 0px 5px 0px;">- 配戴位置 -</h3>
+                        <button id="thumb" class="model_button">拇指</button>
+                        <button id="index" class="model_button">食指</button>
+                        <button id="middle" class="model_button">中指</button><br/>
+                        <button id="ring" class="model_button">無名指</button>
+                        <button id="little" class="model_button">小指</button>
+                    </div>
+
+                    <div style="margin: 10px 0 0 0;">
+                        <h3 style="color:white; margin:10px 0px 0px 0px;">- 戒指尺寸 -</h3>
+                        <div style="height: 50px;">
+                            <div style="margin: 0; padding: 0; height: 4px;"><span style="margin: auto; color:white;" id="currentValue">13</span></div>
+                            <input type="range" oninput="myFunction(this.value)" min="4" max="21" step="1" id="r_size" list="tickmarks"/>
+
+                            <datalist id="tickmarks">
+                                <option value="4" label="4"></option>
+                                <option value="7" label="7"></option>
+                                <option value="10" label="10"></option>
+                                <option value="13" label="13"></option>
+                                <option value="16" label="16"></option>
+                                <option value="19" label="19"></option>
+                                <option value="21" label="21"></option>
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div style="margin: 10px 0 0 0;">
+                        <h3 style="color:white; margin:10px 0px 5px 0px;">- 戒指顏色 -</h3>
+                        {% for instance in obj_c %}
+                            <button class="model_button"><a href="../../{{ instance.id }}/Simulate/">{{ instance.color }}</a></button>
+                        {% endfor %}
+                    </div>
+                </center>
+            </div>
+
+            {% if object.threeD_model %} <!-- 確認是否有模型 -->
+                <div style="color: transparent; font-size: 0;" id="gltf">{{ object.threeD_model.url}}</div>
+            {% endif %}
+
+            <div class="product">  <!-- 目前的戒指 -->
+                {% if object.picture %}
+                    <a href="../"><img style= "width:200px;" src="{{ object.picture.url}}"></a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display: flex; right: 0; position: absolute; flex-direction: column; height: 690px; overflow:auto">  <!-- 右邊方格 -->
+            {% for instance in object_list %}
+                {% if instance.picture %}
+                    {% if instance.threeD_model %}
+                        <div class="product2">
+                            <a href="../../../products/{{ instance.id }}/Simulate/">
+                                <img style= "width:150px;" src="{{ instance.picture.url}}">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <canvas style="display: flex; position: fixed; z-index: -999;"></canvas>
+    </div>
+{#    <script type="module" src="main.js"></script> <!--用main.js-->#}
+
+<script>
+    function myFunction(myValue){
+        document.getElementById("currentValue").innerHTML = myValue;
+    }
+</script>
+</body>
+</html>

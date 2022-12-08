@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="Btn" onclick="trylogout()"><button id="logout_b1">登出</button></div>
+    <div class="alert" id="textlistn" style="display:none;">
+        {% for msg in messages %}{{ msg.message }}{% endfor %}
+        <button type="submit" id="logout_b2"> <a href='logout/'>登出</a></button>
+        <span class="closebtn" onclick="trylogout()">&times;</span>
+    </div>
+
+    {% if request.user.identity == 1 %} <!-- 廠商會員資料 -->
+        <h1>夥伴頁面</h1>
+        <div style="display: flex; position: relative;">
+            <button type="submit"><a href="list/">旗下品牌清單</a></button>
+        </div>
+
+        <div style="display: flex; position: relative;"> <!-- 下方大匡 f-->
+            <div style="margin: 10px 0 0 0; width: 40%;"> <!-- 會員資料（下左） -->
+
+                <h3>夥伴資訊</h3>
+                <p>帳號：{{ request.user.username }}</p>
+                <p>名稱：{{ request.user.last_name }}</p>
+                <p>電子信箱：{{ request.user.email }}</p>
+                <p>電話號碼：{{ request.user.phone_number }}</p>
+                <p>統一編號：{{ request.user.tax_ID_number }}</p>
+                <p>地址：{{ request.user.address}}</p>
+
+                <div style="display: flex;">
+                    <button type="submit"> <a href='update_user_infor/'>更新資料</a></button>
+                    <div id="Btn2" onclick="trydelete()"><button id="delete_1">刪除夥伴</button></div>
+                    <div class="alert" id="textlistn2" style="display:none;">
+                        {% for msg in messages %}{{ msg.message }}{% endfor %}
+                        <button type="submit" id="delete_b2"> <a href='delete_user/'>刪除</a></button>
+                        <span class="closebtn" onclick="trydelete()">&times;</span>
+                    </div>
+                </div>
+
+                {% if request.user.is_staff %}
+                    <ol>
+                        {% for user in user_list %}
+                            <li><a href="delete_user/">{{ user.username }}</a></li>
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </div>
+
+            <hr class="cline"> <!-- 垂直分隔線 -->
+
+            <div style="width: 60%;"> <!-- 會員手部資料（右） -->
+                <h3>手部資訊</h3>
+                <div>
+                    <button type="submit"> <a href='../../GetHand/'>前往抓取手部比例</a></button>
+                    <button type="submit"> <a href='handsize/'>手動修改手部比例</a></button>
+                    <p style="position: relative; color: gray;display: flex; right: 0;">單位：公分(cm)</p>
+
+                        <div style="display: flex; position: relative;">
+                            <div style="width: 50%;">
+                                <P>拇指長：{{ size.thumb_length }}</P>
+                                <P>食指長：{{ size.index_length }}</P>
+                                <P>中指長：{{ size.middle_length }}</P>
+                                <P>無名指長：{{ size.ring_length }}</P>
+                                <P>小指長：{{ size.little_length }}</P>
+                                <P>手掌長：{{ size.palm_length }}</P>
+                            </div>
+
+                            <hr class="cline">
+
+                            <div style="width: 50%;">
+                                <P>拇指寬：{{ size.thumb_width }}</P>
+                                <P>食指寬：{{ size.index_width }}</P>
+                                <P>中指寬：{{ size.middle_width }}</P>
+                                <P>無名指寬：{{ size.ring_width }}</P>
+                                <P>小指寬：{{ size.little_width }}</P>
+                                <P>手掌寬：{{ size.palm_width }}</P>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if request.user.identity == 0 %} <!-- 消費者會員資料 -->
+        <h1>會員頁面</h1>
+        <div style="display: flex; position: relative;margin: 10px 0 0 0;"> <!--會員資訊大欄-->
+            <div style="width: 40%;"> <!-- 身份資料（左） -->
+                <h3>會員資訊</h3>
+                <p>帳號：{{ request.user.username }}</p>
+                <p>名稱：{{ request.user.last_name }}</p>
+                <p>電子信箱：{{ request.user.email }}</p>
+                <p>生日：{{ request.user.date_of_birth }}</p>
+                {% if request.user.gender == 0 %}
+                    <p>性別：生理女</p>
+                {% endif %}
+                {% if request.user.gender == 1 %}
+                    <p>性別：生理男</p>
+                {% endif %}
+                <p>電話號碼：{{ request.user.phone_number }}</p>
+
+                <div style="display: flex;">
+                    <button type="submit"> <a href='cart/'>我的收藏</a></button>
+                    <button type="submit"> <a href='update_user_infor/'>更新資料</a></button>
+                    <div id="Btn2" onclick="trydelete()"><button id="delete_1">刪除會員</button></div>
+                    <div class="alert" id="textlistn2" style="display:none;">
+                        {% for msg in messages %}{{ msg.message }}{% endfor %}
+                        <button type="submit" id="delete_b2"> <a href='delete_user/'>刪除</a></button>
+                        <span class="closebtn" onclick="trydelete()">&times;</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="cline"> <!-- 垂直分隔線 -->
+
+            <div style="width: 60%;"> <!-- 會員手部資料（右） -->
+                <h3>手部資訊</h3>
+                <div>
+                    <button type="submit"> <a href='../../GetHand/'>前往抓取手部比例</a></button>
+                    <button type="submit"> <a href='handsize/'>手動修改手部比例</a></button>
+                    <p style="position: relative; justify-content: right; color: gray;">單位：公分(cm)</p>
+                    <div style="display: flex; position: relative;">
+                        <div style="width: 50%;">
+                            <P>拇指長：{{ size.thumb_length }}</P>
+                            <P>食指長：{{ size.index_length }}</P>
+                            <P>中指長：{{ size.middle_length }}</P>
+                            <P>無名指長：{{ size.ring_length }}</P>
+                            <P>小指長：{{ size.little_length }}</P>
+                            <P>手掌長：{{ size.palm_length }}</P>
+                        </div>
+
+                        <hr class="cline">
+
+                        <div style="width: 50%;">
+                            <P>拇指寬：{{ size.thumb_width }}</P>
+                            <P>食指寬：{{ size.index_width }}</P>
+                            <P>中指寬：{{ size.middle_width }}</P>
+                            <P>無名指寬：{{ size.ring_width }}</P>
+                            <P>小指寬：{{ size.little_width }}</P>
+                            <P>手掌寬：{{ size.palm_width }}</P>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <script>
+        function trylogout(){
+            var Btn = document.getElementById('Btn');
+            var textlistn = document.getElementById('textlistn');
+            if (textlistn.style.display === 'none') {
+                textlistn.style.display = 'block';
+                Btn.style.display = 'none';
+            }
+            else {
+                textlistn.style.display = 'none';
+                Btn.style.display = 'block';
+            }
+        }
+
+        function trydelete(){
+            var Btn2 = document.getElementById('Btn2');
+            var textlistn2 = document.getElementById('textlistn2');
+            if (textlistn2.style.display === 'none') {
+                textlistn2.style.display = 'block';
+                Btn2.style.display = 'none';
+            }
+            else {
+                textlistn2.style.display = 'none';
+                Btn2.style.display = 'block';
+            }
+        }
+    </script>
+{% endblock %}

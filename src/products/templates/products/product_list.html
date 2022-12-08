@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--for loop 列出所有物件編號與標題-->
+    <h1>{{ brand.brand_name }} 商品清單</h1>
+    <button type="submit"> <a href='../../create/'> 新增商品 </a></button>
+    <ol>
+        {% for instance in object_list %}
+            <li>商品編號 No.{{ instance.id }} - <a href='{{ instance.get_absolute_url }}'> {{ instance.product_name }} {{ instance.color }} </a></li>
+        {% endfor %} <!--for loop 結束-->
+    </ol>
+{% endblock %}

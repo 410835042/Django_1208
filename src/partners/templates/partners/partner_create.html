@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!--
+    action='.'引號中為想執行的網址
+    method='POST'為將資料存入資料庫中，method='GET'為取得資料
+    csrf_token為確認網路安全的東西(security feature)
+    -->
+    <center>
+        <h1>{{ state }}</h1>
+
+        <form action='.' method='POST'>{% csrf_token %}
+            {{ form.as_p }}
+            <!--<input type ='text' name='title' placeholder='your_title'/> 「輸入」的型態為'text'，名字為'title'-->
+            {% if state == "新增品牌" %}
+                <button type="submit" onclick="history.back()"> 取消 </button>
+                <input type='submit' onclick="history.back()" class="input_button" value='新增'/><!--「輸入」型態為submit-->
+            {% elif state == "更新品牌"%}
+                <button type="submit" > <a href='../'> 取消 </a></button>
+                <input type='submit' onclick="history.back()" class="input_button" value='更新'/>
+            {% endif %}
+        </form>
+    </center>
+{% endblock %}

@@ -1,0 +1,58 @@
+<div class="header">
+    <div class="container">
+        <a href="../../../" class="logo">
+            <img style="height: 50px;" src="/static/Texture/logo.png"></img>
+            <img style="height: 55px;"src="/static/Texture/name.png"></img>
+        </a>
+
+        <nav class="flex-nav">
+            <a class="item" href="../../../../products/all/">商品</a>
+            {% if request.user.is_authenticated %}
+                <a class="item" href="../../../partners/">會員</a>
+            {% else %}
+                <a class="item" href="../../../partners/index/">會員</a>
+            {% endif %}
+            <a class="item" href="../../../about/">關於我們</a>
+        </nav>
+
+        <div style="display: flex;">
+            <p>手勢操作</p>
+            <div style="margin: 15px 15px 15px 15px;">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round" onclick="call_counter('../../../GetHand/control')" id="control"></span>
+                </label>
+            </div>
+        </div>
+
+{#{% url "products:product_all_view" kwargs %}#}
+        <form action="" method="post" class="navSearch"> {% csrf_token %}
+            <input class="inputSearch" type="search" id="in" placeholder="搜尋商品">
+            <button class="buttonSearch" onclick="searching()" id="SearchButton">搜尋</button>
+        </form>
+{#<i class="fas fa-search">搜尋</i>#}
+        <div class="state">
+            {% if request.user.is_authenticated %}
+                <p class="state-p">{{request.user}} 已登入</p>
+            {% else %}
+                <p class="state-p">您尚未登入</p>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function call_counter(url) { window.open(url); }
+    function searching(){
+        const search_p = document.getElementById('in').value;
+        console.log(search_p)
+        {#window.location.href = '../../../products/all/';#}
+        window.close();
+        call_counter('../../../../Search/')
+    }
+</script>
+
+
+
+

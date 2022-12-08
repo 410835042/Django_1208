@@ -1,0 +1,675 @@
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+    margin: 0;
+    padding: 0;
+    /*background-color: #ffd2d2;*/
+}
+
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -999;
+}
+.bg img {
+    min-height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+            img.bg {
+                left: 50%;
+                margin-left: -500px;
+            }
+        }
+
+/* -----導覽列----- */
+.header {
+	background-image: linear-gradient(90deg, #ffffff, #ffffff);
+    box-shadow: 0px 1px 10px rgba(0,0,0,50%); /*陰影水平位移像素、垂直位移像素、模糊像素、顏色 透明度*/
+    margin: 0;
+    top:0;
+    right:0;
+    left:0;
+    position: fixed;
+    z-index: 99999;
+}
+.container {
+    display: flex; /* 橫向對齊 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header .logo {
+    margin-right: 1em;
+    display: flex;
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none; /* 移除超連結底線 */
+    align-items: center; /* 文字對齊 */
+    /*box-shadow: 0px 1px 10px rgba(0,0,0,50%); !*陰影水平位移像素、垂直位移像素、模糊像素、顏色 透明度*!*/
+}
+
+.header .fa-spotify {
+    padding-right: 0.5em;
+    color: #26ff93;
+}
+
+.header span {
+    font-size: 22px;
+    font-weight: 100;
+}
+
+.header .flex-nav {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.header .item {
+    padding: 10px 20px 10px 20px;
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none; /* 移除超連結底線 */
+    flex-grow: 1;
+    font-size: 1.2rem;
+    box-shadow: 0px 1px 10px transparent; /*陰影水平位移像素、垂直位移像素、模糊像素、顏色 透明度*/
+    position: relative;
+    /*border-bottom: 5px solid transparent;*/
+    transition: 0.3s;
+}
+
+.header .item:hover {
+    /*border-bottom: 5px solid #A44A3F;*/
+    box-shadow: 0px 1px 10px rgba(0,0,0,10%); /*陰影水平位移像素、垂直位移像素、模糊像素、顏色 透明度*/
+}
+
+.header .item:after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 3px;
+    height: 0;
+    border-bottom: 2px solid #A44A3F;
+    transition: 0.3s;
+}
+
+.header .item:hover:after{
+    left: 0;
+    right: 0;
+}
+
+.header .navSearch {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+}
+
+.header .inputSearch {
+    padding-left: 12px;
+    width: 80%;
+    height: 30px;
+    border-radius: 100px 0 0 100px;
+}
+
+.header .buttonSearch {
+    border: none;
+    border-radius: 0 100px 100px 0;
+    width: 25%;
+    outline: none;
+    height: 30px;
+    background-color: #ffd2d2;
+    cursor: pointer;
+}
+
+.header buttonSearch:hover{
+    background-color: #26ff93;
+}
+
+.header .fa-search {
+    display: flex;
+    color: #ffffff;
+}
+
+.header fa-search:hover {
+    color: #26ff93;
+    transition: all 0.3s;
+}
+
+.state{
+    margin-left: 20px;
+    right: 0;
+    background-color: #e6e6e6;
+    width:200px;
+}
+
+.state-p{
+    text-align: center; /* 文字置中 */
+    color: chocolate;
+}
+
+marquee p {
+    margin: 60px 0px 5px 0px;
+    font-style: italic;
+    padding: 0;
+    Opacity:0.5;
+}
+
+
+/*----- 手勢操作 -----*/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 55px;
+  height: 27px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #ff8686;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #ff8686;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 30px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+
+/* ----- 彈出視窗 -----*/
+dialog{
+    border: none;
+    box-shadow: 0 2px 6px #ccc;
+    border-radius: 10px;
+}
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* ------內文----- */
+
+.maininfo{
+    position: page;
+    margin: 0px 100px 30px 100px;
+    padding: 50px 50px 50px 50px;
+    /*background-color: 	#fffaf5;*/
+}
+
+button a{
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none;  /* 移除超連結底線 */
+}
+
+button{
+    margin: 5px;
+    background-color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 2px solid #ff7878;
+    transition: 0.3s; /*轉場效果速度*/
+}
+
+button:hover {
+    background-color: #ff7878;
+    border: 2px solid white;
+    color: black;
+}
+
+
+.input_button{
+    margin: 5px;
+    background-color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 2px solid #ff7878;
+    transition: 0.3s; /*轉場效果速度*/
+}
+
+.input_button:hover {
+    background-color: #ff7878;
+    border: 2px solid white;
+    color: black;
+}
+
+.link-middle {
+    margin: 20px 0px 20px 0px;
+    height: 1px;
+    border-top: solid gray 1px;
+    opacity: 0.8;
+}
+
+.line{
+    margin: 0 50px 0 100px;
+    border-width: 1px;
+    color: gray;
+    background-color: gray;
+}
+
+
+/* ------ 收藏愛心 ------ */
+.heart{
+    position: absolute;
+    margin: 5px;
+    color: transparent;
+    background-color: transparent;
+    border: 2px solid transparent;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+    transition: 0.3s; /*轉場效果速度*/
+}
+
+.heart:hover {
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    color: red;
+}
+
+.chosen_heart{
+    position: absolute;
+    margin: 5px;
+    color: red;
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+}
+
+.chosen_heart:hover{
+    position: absolute;
+    margin: 5px;
+    color: red;
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+}
+
+.heart2{
+    position: absolute;
+    margin: 5px;
+    color: transparent;
+    background-color: transparent;
+    border: 2px solid transparent;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+    transition: 0.3s; /*轉場效果速度*/
+}
+
+.heart2:hover {
+    position: absolute;
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    color: red;
+}
+
+.chosen_heart2{
+    position: absolute;
+    margin: 5px;
+    color: red;
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+}
+
+.chosen_heart2:hover{
+    position: absolute;
+    margin: 5px;
+    color: red;
+    background-color: transparent;
+    border: 2px solid transparent;
+    text-shadow: 1px 1px 0 gray;
+    -webkit-text-stroke: 1px red;
+    font-size: 28px;
+}
+
+
+/* ------ 示警 ------ */
+.alert {
+    padding: 10px;
+    background-color: #ffce8b;
+    color: white;
+    margin: 10px;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
+warning{
+    background-color: #f5dd5d;
+}
+
+
+/* ------ 首頁圖片 ------ */
+.pagesize{
+    display:flex;
+    padding:0;
+    margin: 10px;
+}
+
+.pagesize a{
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none;  /* 移除超連結底線 */
+}
+
+.size{
+    padding:30px 0 10px 0;
+    display:flex;
+    flex-direction: column;
+    color:transparent;
+    position:relative;
+    align-items: center;
+    margin: 10px;
+    height: 300px;
+    width: 300px;
+    border-radius: 5%;
+    transition: 0.3s;
+
+    /* animation 參數設定 */
+    animation-name: ShowUp;    /*動畫名稱，需與 keyframe 名稱對應*/
+    animation-duration: 2s;    /*動畫持續時間，單位為秒*/
+}
+
+.size img{
+   object-fit: contain;
+   padding:0;
+   margin: 0 auto;
+   height:100%;
+   width: 100%;
+}
+
+.size button{
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.size:hover button{
+    visibility: visible;
+}
+
+.size:hover{
+    color:Black;
+    transform:scale(1.2);
+    background-color: #f3f3f3;
+}
+
+.forimage{
+    display:flex;
+    justify-content: center;
+}
+
+.psize{
+    padding:0;
+    margin: 0;
+    text-align: center;
+}
+
+@keyframes ShowUp{
+    from { transform:translateY(100px); }
+    to { transform:translateY(0px); }
+}
+
+
+/* ----- 首頁按鈕 -----*/
+.HomeButton{
+    background-color: white;
+    border: 2px solid #bebebe;
+    color: black;
+}
+
+.HomeButton:hover{
+    background-color: white;
+    border: 2px solid #ff7878;
+    color: black;
+}
+
+
+
+/* ----- 收藏清單分隔線 -----*/
+.cline{
+    margin: 10px;
+    border-width: 1px;
+    color: gray;
+    background-color: gray;
+}
+
+.rline{
+    margin: 10px;
+    border: 0;
+    height: 1px;
+    background: gray;
+}
+
+.x_cross{
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    color: gray;
+    transition: 0.3s;
+}
+
+.x_cross:hover{
+    background: transparent;
+    border: none;
+    color: black;
+}
+
+/* ----- 搜尋 ----- */
+
+.TS {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.TS th {
+    text-align: center;
+    background-color: #bebebe;
+    padding: 8px;
+}
+
+.TS td {
+    border: 1px solid #e6e6e6;
+    text-align: center;
+}
+.TS tr {
+    text-align: center;
+    justify-content: space-evenly;
+}
+.TS tr:nth-child(even) {
+    background-color: #e6e6e6;
+}
+
+
+.TS tr:hover {
+    background-color: #AAAAAA;
+}
+
+
+/* ----- 小幫手 ----- */
+.helper {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    right: 0;
+    top: 80%;
+    height: 60px;
+    width: 60px;
+    background-color: #A1D0FF;
+    border-radius: 15%;
+    z-index: 9999;
+    transition: 0.3s;
+}
+
+.helper a{
+    color: inherit; /* 移除超連結顏色 */
+    text-decoration: none;  /* 移除超連結底線 */
+}
+
+.question_mark{
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    border: 4px solid white;
+    border-radius: 100%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.question_mark h5 {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    color: white;
+}
+
+.description{
+    position: absolute;
+    display: flex;
+    height: 50px;
+    width: 50px;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 57px;
+    width: 57px;
+    background-color: #A1D0FF;
+    border: 2px solid white;
+    border-radius: 15%;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.description p{
+    position: relative;
+    padding: 0;
+    margin: 0;
+    visibility: hidden;
+    font-size: 0.01px;
+    transition: 0.3s;
+}
+
+.des2{
+    color: white;
+    transition: 0.3s;
+}
+
+.des2:hover{
+    color: black;
+}
+
+.description:hover{
+    visibility: visible;
+}
+
+.helper:hover p{
+    visibility: visible;
+    transform: scale(0.8);
+}
+
+.helper:hover{
+    transform-origin: 100%  50%;
+    transform: scaleX(3) scaleY(3) translateX(-10px);
+    opacity: 1; /* 半透明 */
+}
+
+
+/* ----- 底部資訊 ----- */
+.link-top {
+    margin: 20px 100px 20px 100px;
+    height: 1px;
+    border-top: solid gray 1px;
+    opacity: 0.8;
+}
+
+.bottominfo{
+    margin: 30px 100px 30px 100px;
+    color:gray;
+    font-size:16px;
+    line-height: 10px;
+    /*opacity: 0.8;*/
+
+    /*text-align: center;*/
+    /*vertical-align:bottom;*/
+
+}
+
+.divider{
+    margin: 0 100px 0 100px;
+    border: 0;
+    height: 1px;
+    background: gray;
+}
+
+
